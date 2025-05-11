@@ -7,84 +7,110 @@ umaima abeer  22K_4738
 #demo video link:
 https://youtu.be/jtCenuWJSvg
 
-# checkers-minimax
-AI for checkers using minimax algorithm.
+# Checkers AI using Minimax Algorithm
 
-In this project the popular board game of *Checkers* has been designed and implemented by using the Pygame framework. The game follows the rules of International Draughts, which is played on a 10x10 checkerboard. The Artifial Intelligence (AI) implemented in the opponent uses the classic Minimax algorithm with a custom evaluation function in which the game board is evaluated with a score. The evaluation function is the core of the algorithm and the better is designed, the more intelligent the AI will be, and consequently harder to beat.
+This project is a Python implementation of the classic game of *Checkers* using the Pygame library. It follows the rules of **International Draughts**, played on a 10x10 board. The opponent AI is powered by the **Minimax algorithm**, with a custom evaluation function to score and assess the favorability of each board state.
 
-## Aim of the project:
-The aim of the project was not to create the perfect AI, but rather to investigate how powerful this algorithm can be in a popular 2 players game with an average knowledge of its strategies and tacticts. The minimax algorithm at the current stage has been proposed in its raw form without Alpha-Beta pruning. Regarding the evaluation function, all the criteria and metrics implemented follow my judgement and understanding of the game, no ispiration from other projects was taken in order to be more challenging for myself.
+---
 
-## Minimax algorithm explanation:
-The main concept around which the minimax algorithm gravitates, is the assumption of facing an intelligent opponent who is always playing in his interest. Starting on our turn we build the decision tree, every branch corresponds to a move that we make that leads to a different state (i.e. a different game board configuration). On the opponent's turn, from each of the states that we develop, new branches are created, one for every possible opponent's move, and so on. 
+## 🎯 Project Objective
 
-Given a fixed height of the tree (i.e. number of moves we want to look ahead), we now want to assign a value to each node, representing the score that the player, playing at that turn, is getting. Starting from the bottom of the tree (and supposing its our turn) by means of an evaluation function we assign to the board state we are considering a value, which can be positive (good for us) of negative (bad for us). 
+The aim is to explore how effective the Minimax algorithm can be in a strategic two-player game like Checkers, using only basic knowledge of tactics and without advanced AI techniques like Alpha-Beta pruning. The evaluation function was built from scratch without referencing existing implementations to create a unique learning experience.
 
-After all the leafs of the tree have been assigned values, we trace back to each parent state (which will fall under the opponent's turn) and we choose the lowest value from all childs (by assumption the opponent wants to minimize our score). Tracing back another time we end up in our turn, and we choose the maximum value from the ones choosen by the opponents, in order to maximize our score. 
+---
 
-By repeating this procedure we go back to the initial state with the best score we can get knowing the opponent is smart and trying to counteract our winning strategy to get us the lowest value. Using this decision strategy for every move will bring us (hopefully) to win.
+## 🧠 How the Minimax Algorithm Works
 
-<img align="center" src="images/minimax_ex.png">
+Minimax assumes a rational opponent who always tries to minimize your advantage. The decision tree is built turn-by-turn:
 
-## Evaluation function implementation:
-There are 2 critical parts for this algorithm to work properly:
-- Large enough tree's height;
-- Well thought and designed evaluation function;
+- **Your move**: all possible moves create new branches (board states).
+- **Opponent’s move**: for each of your potential moves, the opponent responds, growing the tree further.
 
-The first part is critical for a time complexity kind of problem (being the search of the decision tree a NP-hard problem). Potentially, being checkers a finite moves game, we could search the entire tree in order to choose always the move that gets us to a winning state, but that's obviously unfeasable and so we have to use trees of fixed height and rely on the use of an evaluation function that teels us accurately how much a state in favorable to us (even though it is not a final one).
+At the **leaf nodes** (deepest level of the tree), the evaluation function assigns a score:
 
-The second part is critical because the intelligence of our AI relies on the criteria and metrics that we choose to implement. By randomly guessing the goodness of the states, this algorithm is no better than playing while blindfolded. So, in order to design an evaluation function, a deep knowledge about the game is required.
+- Good for you → higher score
+- Bad for you → lower score
 
-With the premises explained before, my implementation of the evaluation function for checkers works as follows:
-1) If a state is a final one, if we win return +1000, if we lose return -1000;
-2) Otherwise initializate a variable to 0, sum rewards or penalties according to various criteria and then return the sum.
+Then, using backtracking:
+- At the opponent's level: choose the **minimum** score (they're minimizing your advantage).
+- At your level: choose the **maximum** score.
 
-<p><b>List of rewards (for pieces on our side):</b></p>
+This recursive logic continues up to the root (current board), selecting the move that leads to the most favorable predicted outcome.
 
-<table>
-<tbody>
-<tr>
-  <td><b>For every king alive</b></td>
-<td>+ 100</td>
-</tr>
-<tr>
-<td><b>For every piece alive</b></td>
-<td>+ 20</td>
-</tr>
-<tr>
-  <td><b>How close to the wall</b></td>
-<td>+ (y_coord/10)*10</td>
-</tr>
-<tr>
-  <td><b>How close to the sides</b></td>
-<td>+ (1-(0.5/abs(x_coord-5.5)))*20</td>
-</tr>
-</tbody>
-</table>
+![Minimax Algorithm Diagram](images/minimax_diagram.png)
 
-<p><b>List of penalties (for pieces on opponent's side):</b></p>
-<table>
-<tbody>
-<tr>
-  <td><b>For every king alive</b></td>
-<td>- 100</td>
-</tr>
-<tr>
-<td><b>For every piece alive</b></td>
-<td>- 20</td>
-</tr>
-<tr>
-  <td><b>How close to the wall</b></td>
-<td>- ((10-y_coord)/10)*10</td>
-</tr>
-<tr>
-  <td><b>How close to the sides</b></td>
-<td>- (1-(0.5/abs(x_coord-5.5)))*20</td>
-</tr>
-</tbody>
-</table>
-   
-With these simple rules the AI has a sort of understanding of how a beginner could play by keeping into account just the number of his pieces and kings and their position in relation to the board. This however does not take into account formations (position of pieces in relation to each other) nor more advanced strategies (e.g. force the opponent into a forced eating move).
+---
+
+## 🧮 Evaluation Function Design
+
+### Key Considerations:
+- A deeper decision tree offers smarter AI but increases computation time.
+- A high-quality evaluation function can estimate the value of non-final game states.
+
+### Scoring Logic:
+
+#### 🔚 Final State:
+- Win → **+1500**
+- Loss → **–1500**
+
+#### 🔁 Non-Final State:
+Initialize score = 0 and adjust based on board attributes.
+
+#### ✅ AI Player (Rewards):
+
+| Feature                               | Score Formula                         |
+|--------------------------------------|----------------------------------------|
+| Each **king**                        | +120                                   |
+| Each **regular piece**               | +30                                    |
+| Closer to promotion row (bottom)     | + (y_coord / 10) * 15                  |
+| Closer to center (board control)     | + (1 - (0.5 / abs(x_coord - 5.5))) * 25|
+
+#### ❌ Opponent (Penalties):
+
+| Feature                               | Score Formula                          |
+|--------------------------------------|----------------------------------------|
+| Each **king**                        | –120                                   |
+| Each **regular piece**               | –30                                    |
+| Closer to promotion row (top)        | – ((10 - y_coord) / 10) * 15           |
+| Closer to center (board control)     | – (1 - (0.5 / abs(x_coord - 5.5))) * 25|
+
+> 📝 This heuristic values positional strength, piece importance, and movement potential. It does **not** yet account for formations, forced captures, or multi-jump traps.
+
+---
+
+## 📦 Features
+
+- ✅ Full implementation of International Draughts rules
+- ✅ Turn-based gameplay with AI opponent
+- ✅ AI powered by Minimax algorithm (no pruning)
+- ✅ Custom state evaluation function
+- ✅ Visual gameplay using Pygame
+
+---
+
+## 🚀 Future Improvements
+
+- Add **Alpha-Beta pruning** to optimize performance.
+- Improve evaluation function with pattern recognition (e.g., formations).
+- Add difficulty levels (vary tree depth).
+- Track game history and visualize decision-making.
+
+---
+
+## 🖼️ Gameplay Demo
+
+> (Insert gameplay screenshot here if available)
+
+---
+
+## 🛠️ Requirements
+
+- Python 3.x
+- Pygame
+
+```bash
+pip install pygame
+
 
 
 
