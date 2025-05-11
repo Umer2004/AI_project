@@ -78,10 +78,7 @@ With the premises explained before, my implementation of the evaluation function
 With these simple rules the AI has a sort of understanding of how a beginner could play by keeping into account just the number of his pieces and kings and their position in relation to the board. This however does not take into account formations (position of pieces in relation to each other) nor more advanced strategies (e.g. force the opponent into a forced eating move).
 
 
-## Contacts:
-If you have any issues and/or questions don't hesitate to contact me at the e-mail address provided below. This was just a fun project and any suggestions to improve the AI will be welcomed as well.
 
-lorenzo.gualniera@gmail.com
 
 ## Screenshots:
 <img align="left" width="35%" src="images/board0.png">
