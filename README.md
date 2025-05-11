@@ -1,3 +1,6 @@
+#demo video link:
+https://youtu.be/jtCenuWJSvg
+
 # checkers-minimax
 AI for checkers using minimax algorithm.
 
