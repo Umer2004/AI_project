@@ -4,9 +4,6 @@ adeen ali     22K-4679
 arsalan       22K-4694
 umaima abeer  22K_4738
 
-#demo video link:
-https://youtu.be/jtCenuWJSvg
-
 # Checkers AI using Minimax Algorithm
 
 This project is a Python implementation of the classic game of *Checkers* using the Pygame library. It follows the rules of **International Draughts**, played on a 10x10 board. The opponent AI is powered by the **Minimax algorithm**, with a custom evaluation function to score and assess the favorability of each board state.
@@ -37,7 +34,7 @@ Then, using backtracking:
 
 This recursive logic continues up to the root (current board), selecting the move that leads to the most favorable predicted outcome.
 
-![Minimax Algorithm Diagram](images/minimax_diagram.png)
+
 
 ---
 
@@ -99,7 +96,7 @@ Initialize score = 0 and adjust based on board attributes.
 
 ## 🖼️ Gameplay Demo
 
-> (Insert gameplay screenshot here if available)
+> https://youtu.be/jtCenuWJSvg
 
 ---
 
